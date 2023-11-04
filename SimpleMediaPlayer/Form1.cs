@@ -39,9 +39,7 @@ namespace SimpleMediaPlayer
         {
             timer.Interval = 200;
             timer.Elapsed += Timer_Elapsed;
-
-
-
+            
             TcpServer server = new TcpServer(this);
             server.Start(Settings.Default.portClient);
 
@@ -136,8 +134,10 @@ namespace SimpleMediaPlayer
                 path = openFileDialog1.FileName;
                 var media = new Media(_libVLC, new Uri(path));
                 this.Text = Path.GetFileNameWithoutExtension(path);
-                _mp.Play(media);
-                _mp.Pause();
+                //_mp.Play(media);
+                _mp.Media = media;
+                
+                
             }
         }
         private void ïîäêëþ÷èòüñÿToolStripMenuItem_Click(object sender, EventArgs e)
