@@ -21,8 +21,6 @@ namespace SimpleMediaPlayer
             }
             InitializeComponent();
 
-
-
             _libVLC = new LibVLC();
             _mp = new LibVLCSharp.Shared.MediaPlayer(_libVLC);
             videoView1.MediaPlayer = _mp;
@@ -54,9 +52,10 @@ namespace SimpleMediaPlayer
             timer.Start();
             int length_s = Convert.ToInt32(_mp.Length / 1000);
             metroTrackBar1.Maximum = length_s;
+
             _mp.EnableKeyInput = false;
             _mp.EnableMouseInput = false;
-            //toolStripButton1.
+
         }
 
         private void OnPaused(object sender, EventArgs e)
@@ -124,6 +123,7 @@ namespace SimpleMediaPlayer
             {
                 path = openFileDialog1.FileName;
                 var media = new Media(_libVLC, new Uri(path));
+                this.Text = Path.GetFileNameWithoutExtension(path);
                 _mp.Play(media);
             }
         }
@@ -137,6 +137,18 @@ namespace SimpleMediaPlayer
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
             _mp.Pause();
+        }
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            if (_mp.Mute)
+            {
+                toolStripButton3.Image = Properties.Resources.unmute;
+            }
+            else
+            {
+                toolStripButton3.Image = Properties.Resources.mute;
+            }
+            _mp.ToggleMute();
         }
         #endregion
 
@@ -177,17 +189,6 @@ namespace SimpleMediaPlayer
             toolStripTextBox1.Text = t.ToString(@"hh\:mm\:ss");
         }
 
-        private void toolStripButton3_Click(object sender, EventArgs e)
-        {
-            if (_mp.Mute)
-            {
-                toolStripButton3.Image = Properties.Resources.unmute;
-            }
-            else
-            {
-                toolStripButton3.Image = Properties.Resources.mute;
-            }
-            _mp.ToggleMute();
-        }
+
     }
 }

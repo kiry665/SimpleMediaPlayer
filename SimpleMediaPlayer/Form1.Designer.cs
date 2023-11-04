@@ -92,6 +92,7 @@
             toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripButton1, toolStripButton2, toolStripTextBox1, toolStripButton3 });
             toolStrip1.Location = new Point(0, 511);
             toolStrip1.Name = "toolStrip1";
+            toolStrip1.ShowItemToolTips = false;
             toolStrip1.Size = new Size(800, 33);
             toolStrip1.TabIndex = 2;
             toolStrip1.Text = "toolStrip1";
@@ -99,6 +100,7 @@
             // toolStripButton1
             // 
             toolStripButton1.BackColor = Color.White;
+            toolStripButton1.CheckOnClick = true;
             toolStripButton1.DisplayStyle = ToolStripItemDisplayStyle.Image;
             toolStripButton1.Image = Properties.Resources.play;
             toolStripButton1.ImageTransparentColor = Color.Magenta;
