@@ -100,7 +100,6 @@
             // toolStripButton1
             // 
             toolStripButton1.BackColor = Color.White;
-            toolStripButton1.CheckOnClick = true;
             toolStripButton1.DisplayStyle = ToolStripItemDisplayStyle.Image;
             toolStripButton1.Image = Properties.Resources.play;
             toolStripButton1.ImageTransparentColor = Color.Magenta;
