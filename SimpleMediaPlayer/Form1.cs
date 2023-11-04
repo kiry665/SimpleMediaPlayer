@@ -256,12 +256,5 @@ namespace SimpleMediaPlayer
                     break;
             }
         }
-
-        private void toolStripButton4_Click(object sender, EventArgs e)
-        {
-            _mp.Pause();
-            client.SendData("Sync/" + (_mp.Time / 1000).ToString());
-            sync = true;
-        }
     }
 }

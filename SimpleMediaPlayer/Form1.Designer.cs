@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             videoView1 = new LibVLCSharp.WinForms.VideoView();
             menuStrip1 = new MenuStrip();
             файлToolStripMenuItem = new ToolStripMenuItem();
@@ -44,7 +43,6 @@
             toolStripTextBox1 = new ToolStripTextBox();
             toolStripButton3 = new ToolStripButton();
             metroTrackBar1 = new MetroFramework.Controls.MetroTrackBar();
-            toolStripButton4 = new ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)videoView1).BeginInit();
             menuStrip1.SuspendLayout();
             toolStrip1.SuspendLayout();
@@ -99,21 +97,21 @@
             // подключитьсяToolStripMenuItem
             // 
             подключитьсяToolStripMenuItem.Name = "подключитьсяToolStripMenuItem";
-            подключитьсяToolStripMenuItem.Size = new Size(270, 34);
+            подключитьсяToolStripMenuItem.Size = new Size(234, 34);
             подключитьсяToolStripMenuItem.Text = "Подключиться";
             подключитьсяToolStripMenuItem.Click += подключитьсяToolStripMenuItem_Click;
             // 
             // отключитьсяToolStripMenuItem
             // 
             отключитьсяToolStripMenuItem.Name = "отключитьсяToolStripMenuItem";
-            отключитьсяToolStripMenuItem.Size = new Size(270, 34);
+            отключитьсяToolStripMenuItem.Size = new Size(234, 34);
             отключитьсяToolStripMenuItem.Text = "Отключиться";
             отключитьсяToolStripMenuItem.Click += отключитьсяToolStripMenuItem_Click;
             // 
             // настройкиToolStripMenuItem
             // 
             настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
-            настройкиToolStripMenuItem.Size = new Size(270, 34);
+            настройкиToolStripMenuItem.Size = new Size(234, 34);
             настройкиToolStripMenuItem.Text = "Настройки";
             настройкиToolStripMenuItem.Click += настройкиToolStripMenuItem_Click;
             // 
@@ -123,7 +121,7 @@
             toolStrip1.BackColor = Color.White;
             toolStrip1.Dock = DockStyle.Bottom;
             toolStrip1.ImageScalingSize = new Size(24, 24);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripButton1, toolStripButton2, toolStripTextBox1, toolStripButton3, toolStripButton4 });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripButton1, toolStripButton2, toolStripTextBox1, toolStripButton3 });
             toolStrip1.Location = new Point(0, 511);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.ShowItemToolTips = false;
@@ -185,16 +183,6 @@
             metroTrackBar1.Value = 0;
             metroTrackBar1.Scroll += metroTrackBar1_Scroll;
             // 
-            // toolStripButton4
-            // 
-            toolStripButton4.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButton4.Image = (Image)resources.GetObject("toolStripButton4.Image");
-            toolStripButton4.ImageTransparentColor = Color.Magenta;
-            toolStripButton4.Name = "toolStripButton4";
-            toolStripButton4.Size = new Size(34, 28);
-            toolStripButton4.Text = "toolStripButton4";
-            toolStripButton4.Click += toolStripButton4_Click;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(144F, 144F);
@@ -236,6 +224,5 @@
         private ToolStripMenuItem подключитьсяToolStripMenuItem;
         private ToolStripMenuItem отключитьсяToolStripMenuItem;
         private ToolStripMenuItem настройкиToolStripMenuItem;
-        private ToolStripButton toolStripButton4;
     }
 }
