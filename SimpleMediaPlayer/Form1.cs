@@ -1,4 +1,6 @@
 using LibVLCSharp.Shared;
+using Microsoft.Extensions.Configuration;
+using SimpleMediaPlayer.Properties;
 using System.Timers;
 using System.Windows.Forms;
 
@@ -13,6 +15,9 @@ namespace SimpleMediaPlayer
         string path = "";
         FormWindowState last_state = FormWindowState.Normal;
         System.Timers.Timer timer = new System.Timers.Timer();
+        TcpClientEx client = new TcpClientEx();
+        bool sync = false;
+
         public Form1()
         {
             if (!DesignMode)
@@ -35,11 +40,17 @@ namespace SimpleMediaPlayer
             timer.Interval = 200;
             timer.Elapsed += Timer_Elapsed;
 
+
+
+            TcpServer server = new TcpServer(this);
+            server.Start(Settings.Default.portClient);
+
             //var media = new Media(_libVLC, new Uri("C:\\Users\\novok\\Downloads\\2.mp4"));
             //_mp.Play(media);
         }
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
+            _mp.Pause();
             _mp.Stop();
             _mp.Dispose();
             _libVLC.Dispose();
@@ -55,7 +66,6 @@ namespace SimpleMediaPlayer
 
             _mp.EnableKeyInput = false;
             _mp.EnableMouseInput = false;
-
         }
 
         private void OnPaused(object sender, EventArgs e)
@@ -76,10 +86,12 @@ namespace SimpleMediaPlayer
             if (_mp.IsPlaying)
             {
                 _mp.Pause();
+                client.SendData("Pause");
             }
             else
             {
                 _mp.Play();
+                client.SendData("Play");
             }
 
         }
@@ -127,16 +139,33 @@ namespace SimpleMediaPlayer
                 _mp.Play(media);
             }
         }
+        private void ïîäêëþ÷èòüñÿToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            client.Connect(Settings.Default.ipServer, Settings.Default.portServer);
+        }
+
+        private void îòêëþ÷èòüñÿToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            client.Disconnect();
+        }
+
+        private void íàñòðîéêèToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form2 f = new Form2();
+            f.Show();
+        }
         #endregion
 
         #region Tool
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             _mp.Play();
+            client.SendData("Play");
         }
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
             _mp.Pause();
+            client.SendData("Pause");
         }
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
@@ -187,8 +216,52 @@ namespace SimpleMediaPlayer
             _mp.Time = metroTrackBar1.Value * 1000;
             TimeSpan t = TimeSpan.FromMilliseconds(_mp.Time);
             toolStripTextBox1.Text = t.ToString(@"hh\:mm\:ss");
+
+            //client.SendData("Sync/" + (_mp.Time / 1000).ToString());
+            client.SendData("Set/" + (_mp.Time / 1000).ToString());
         }
 
+        public void RecieveData(string data)
+        {
+            string[] arr = data.Split('/');
+            if (arr[0] == "Sync")
+            {
+                if (_mp.IsPlaying)
+                {
+                    _mp.Pause();
+                }
+                if (Convert.ToInt32(arr[1]) > (_mp.Time / 1000))
+                {
+                    client.SendData("Sync/" + (_mp.Time / 1000).ToString());
+                }
+                else
+                {
+                    _mp.Time = Convert.ToInt32(arr[1]) * 1000;
+                    _mp.Play();
+                    client.SendData("Play");
 
+                }
+            }
+            if (arr[0] == "Set")
+            {
+                _mp.Time = Convert.ToInt32(arr[1]) * 1000;
+            }
+            switch (data)
+            {
+                case "Play":
+                    _mp.Play();
+                    break;
+                case "Pause":
+                    _mp.Pause();
+                    break;
+            }
+        }
+
+        private void toolStripButton4_Click(object sender, EventArgs e)
+        {
+            _mp.Pause();
+            client.SendData("Sync/" + (_mp.Time / 1000).ToString());
+            sync = true;
+        }
     }
 }
