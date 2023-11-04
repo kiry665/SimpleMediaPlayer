@@ -15,6 +15,7 @@ namespace SimpleMediaPlayer
         }
         private TcpListener server;
         private bool isRunning;
+        public bool ready = false;
 
         public async Task Start(int port)
         {
@@ -50,6 +51,7 @@ namespace SimpleMediaPlayer
             try
             {
                 Console.WriteLine("Клиент подключен.");
+                ready = true;
                 NetworkStream stream = client.GetStream();
 
                 // Чтение данных от клиента в бесконечном цикле
@@ -62,11 +64,6 @@ namespace SimpleMediaPlayer
                     Console.WriteLine("Получены данные от клиента: " + data);
 
                     formInstance.RecieveData(data);
-
-                    string response = "Сообщение получено успешно.";
-                    byte[] responseData = Encoding.ASCII.GetBytes(response);
-                    await stream.WriteAsync(responseData, 0, responseData.Length);
-                    Console.WriteLine("Отправлен ответ клиенту: " + response);
                 }
             }
             catch (Exception ex)
