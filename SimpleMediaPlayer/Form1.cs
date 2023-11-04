@@ -137,6 +137,7 @@ namespace SimpleMediaPlayer
                 var media = new Media(_libVLC, new Uri(path));
                 this.Text = Path.GetFileNameWithoutExtension(path);
                 _mp.Play(media);
+                _mp.Pause();
             }
         }
         private void ïîäêëþ÷èòüñÿToolStripMenuItem_Click(object sender, EventArgs e)
@@ -217,7 +218,6 @@ namespace SimpleMediaPlayer
             TimeSpan t = TimeSpan.FromMilliseconds(_mp.Time);
             toolStripTextBox1.Text = t.ToString(@"hh\:mm\:ss");
 
-            //client.SendData("Sync/" + (_mp.Time / 1000).ToString());
             client.SendData("Set/" + (_mp.Time / 1000).ToString());
         }
 
