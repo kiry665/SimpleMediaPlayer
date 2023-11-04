@@ -136,8 +136,6 @@ namespace SimpleMediaPlayer
                 this.Text = Path.GetFileNameWithoutExtension(path);
                 //_mp.Play(media);
                 _mp.Media = media;
-                
-                
             }
         }
         private void ïîäêëş÷èòüñÿToolStripMenuItem_Click(object sender, EventArgs e)
