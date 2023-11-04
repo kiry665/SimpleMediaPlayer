@@ -39,7 +39,7 @@ namespace SimpleMediaPlayer
         {
             timer.Interval = 200;
             timer.Elapsed += Timer_Elapsed;
-            
+
             TcpServer server = new TcpServer(this);
             server.Start(Settings.Default.portClient);
 
@@ -52,6 +52,7 @@ namespace SimpleMediaPlayer
             _mp.Stop();
             _mp.Dispose();
             _libVLC.Dispose();
+            Application.Exit();
         }
         #endregion
 
@@ -216,7 +217,7 @@ namespace SimpleMediaPlayer
             TimeSpan t = TimeSpan.FromMilliseconds(_mp.Time);
             toolStripTextBox1.Text = t.ToString(@"hh\:mm\:ss");
 
-            client.SendData("Set/" + (_mp.Time / 1000).ToString());
+            //client.SendData("Set/" + (_mp.Time / 1000).ToString());
         }
 
         public void RecieveData(string data)
@@ -253,6 +254,16 @@ namespace SimpleMediaPlayer
                     _mp.Pause();
                     break;
             }
+        }
+
+        private void metroTrackBar1_MouseUp(object sender, MouseEventArgs e)
+        {
+            client.SendData("Set/" + (_mp.Time / 1000).ToString());
+        }
+
+        private void metroTrackBar1_KeyUp(object sender, KeyEventArgs e)
+        {
+            client.SendData("Set/" + (_mp.Time / 1000).ToString());
         }
     }
 }
