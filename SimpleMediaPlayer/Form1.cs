@@ -16,7 +16,6 @@ namespace SimpleMediaPlayer
         FormWindowState last_state = FormWindowState.Normal;
         System.Timers.Timer timer = new System.Timers.Timer();
         TcpClientEx client = new TcpClientEx();
-        //bool sync = false;
         bool mouseInBar = false;
 
 
@@ -183,6 +182,35 @@ namespace SimpleMediaPlayer
         }
         #endregion
 
+        #region TrackBar
+        private void metroTrackBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+            _mp.Time = metroTrackBar1.Value * 1000;
+            TimeSpan t = TimeSpan.FromMilliseconds(_mp.Time);
+            toolStripTextBox1.Text = t.ToString(@"hh\:mm\:ss");
+            if (!mouseInBar)
+            {
+                client.SendData("Set/" + (_mp.Time / 1000).ToString());
+            }
+            //client.SendData("Set/" + (_mp.Time / 1000).ToString());
+        }
+
+        private void metroTrackBar1_MouseEnter(object sender, EventArgs e)
+        {
+            mouseInBar = true;
+        }
+
+        private void metroTrackBar1_MouseLeave(object sender, EventArgs e)
+        {
+            mouseInBar = false;
+        }
+
+        private void metroTrackBar1_MouseUp(object sender, MouseEventArgs e)
+        {
+            client.SendData("Set/" + (_mp.Time / 1000).ToString());
+        }
+        #endregion
+
         private void Timer_Elapsed(object? sender, ElapsedEventArgs e)
         {
             TimeSpan t = TimeSpan.FromMilliseconds(_mp.Time);
@@ -211,18 +239,6 @@ namespace SimpleMediaPlayer
             {
                 metroTrackBar1.Value = time_s;
             }
-        }
-
-        private void metroTrackBar1_Scroll(object sender, ScrollEventArgs e)
-        {
-            _mp.Time = metroTrackBar1.Value * 1000;
-            TimeSpan t = TimeSpan.FromMilliseconds(_mp.Time);
-            toolStripTextBox1.Text = t.ToString(@"hh\:mm\:ss");
-            if (!mouseInBar)
-            {
-                client.SendData("Set/" + (_mp.Time / 1000).ToString());
-            }
-            //client.SendData("Set/" + (_mp.Time / 1000).ToString());
         }
 
         public void RecieveData(string data)
@@ -261,19 +277,6 @@ namespace SimpleMediaPlayer
             }
         }
 
-        private void metroTrackBar1_MouseEnter(object sender, EventArgs e)
-        {
-            mouseInBar = true;
-        }
-
-        private void metroTrackBar1_MouseLeave(object sender, EventArgs e)
-        {
-            mouseInBar = false;
-        }
-
-        private void metroTrackBar1_MouseUp(object sender, MouseEventArgs e)
-        {
-            client.SendData("Set/" + (_mp.Time / 1000).ToString());
-        }
+      
     }
 }
