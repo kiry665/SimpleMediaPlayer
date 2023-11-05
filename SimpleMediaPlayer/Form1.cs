@@ -16,7 +16,9 @@ namespace SimpleMediaPlayer
         FormWindowState last_state = FormWindowState.Normal;
         System.Timers.Timer timer = new System.Timers.Timer();
         TcpClientEx client = new TcpClientEx();
-        bool sync = false;
+        //bool sync = false;
+        bool mouseInBar = false;
+
 
         public Form1()
         {
@@ -216,7 +218,10 @@ namespace SimpleMediaPlayer
             _mp.Time = metroTrackBar1.Value * 1000;
             TimeSpan t = TimeSpan.FromMilliseconds(_mp.Time);
             toolStripTextBox1.Text = t.ToString(@"hh\:mm\:ss");
-
+            if (!mouseInBar)
+            {
+                client.SendData("Set/" + (_mp.Time / 1000).ToString());
+            }
             //client.SendData("Set/" + (_mp.Time / 1000).ToString());
         }
 
@@ -256,17 +261,19 @@ namespace SimpleMediaPlayer
             }
         }
 
+        private void metroTrackBar1_MouseEnter(object sender, EventArgs e)
+        {
+            mouseInBar = true;
+        }
+
+        private void metroTrackBar1_MouseLeave(object sender, EventArgs e)
+        {
+            mouseInBar = false;
+        }
+
         private void metroTrackBar1_MouseUp(object sender, MouseEventArgs e)
         {
             client.SendData("Set/" + (_mp.Time / 1000).ToString());
-        }
-
-        private void metroTrackBar1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Right || e.KeyCode == Keys.Left)
-            {
-                client.SendData("Set/" + (_mp.Time / 1000).ToString());
-            }
         }
     }
 }

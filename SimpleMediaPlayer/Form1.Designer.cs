@@ -182,7 +182,8 @@
             metroTrackBar1.Text = "metroTrackBar1";
             metroTrackBar1.Value = 0;
             metroTrackBar1.Scroll += metroTrackBar1_Scroll;
-            metroTrackBar1.KeyDown += metroTrackBar1_KeyDown;
+            metroTrackBar1.MouseEnter += metroTrackBar1_MouseEnter;
+            metroTrackBar1.MouseLeave += metroTrackBar1_MouseLeave;
             metroTrackBar1.MouseUp += metroTrackBar1_MouseUp;
             // 
             // Form1
