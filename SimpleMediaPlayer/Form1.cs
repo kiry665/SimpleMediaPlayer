@@ -261,9 +261,12 @@ namespace SimpleMediaPlayer
             client.SendData("Set/" + (_mp.Time / 1000).ToString());
         }
 
-        private void metroTrackBar1_KeyUp(object sender, KeyEventArgs e)
+        private void metroTrackBar1_KeyDown(object sender, KeyEventArgs e)
         {
-            client.SendData("Set/" + (_mp.Time / 1000).ToString());
+            if (e.KeyCode == Keys.Right || e.KeyCode == Keys.Left)
+            {
+                client.SendData("Set/" + (_mp.Time / 1000).ToString());
+            }
         }
     }
 }
